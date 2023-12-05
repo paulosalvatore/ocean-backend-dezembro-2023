@@ -53,15 +53,15 @@ async function main() {
   })
 
   // Create - [POST] /item
-  app.post("/item", function (req, res) {
-    // Extraímos o nome do Body da Requisição
-    const item = req.body.nome
+  app.post("/item", async function (req, res) {
+    // Pegamos o Body da Requisição
+    const item = req.body
 
-    // Adicionamos o item recebido na lista
-    lista.push(item)
+    // Adicionamos o item recebido na collection
+    await collection.insertOne(item)
 
-    // Exibimos uma mensagem de sucesso
-    res.send("Item adicionado com sucesso!")
+    // Exibimos o item adicionado
+    res.send(item)
   })
 
   // Update - [PUT] /item/:id
