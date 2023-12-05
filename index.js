@@ -84,12 +84,14 @@ async function main() {
   })
 
   // Delete - [DELETE] /item/:id
-  app.delete("/item/:id", function (req, res) {
+  app.delete("/item/:id", async function (req, res) {
     // Obtemos o ID do Parâmetro de rota
-    const id = req.params.id - 1
+    const id = req.params.id
 
-    // Removemos o item da lista
-    delete lista[id]
+    // Removemos o item da collection
+    await collection.deleteOne({
+      _id: new ObjectId(id)
+    })
 
     // Exibimos uma mensagem de sucesso
     res.send("Item removido com sucesso!")
